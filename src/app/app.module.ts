@@ -1,6 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
+import { FormsModule } from "@angular/forms";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./components/login/login.component";
@@ -10,19 +11,13 @@ import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
 import { ProfileComponent } from "./components/profile/profile.component";
 import { CalendarComponent } from "./components/calendar/calendar.component";
 
+//fire base modules
+
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
-
-var firebaseConfig = {
-  apiKey: "AIzaSyCtokLWJBEb8N1veSWVZkI4cO1Dze3jh44",
-  authDomain: "calendar-app-7239b.firebaseapp.com",
-  databaseURL: "https://calendar-app-7239b.firebaseio.com",
-  projectId: "calendar-app-7239b",
-  storageBucket: "calendar-app-7239b.appspot.com",
-  messagingSenderId: "265895014653",
-  appId: "1:265895014653:web:a29b65749dcc0559dece94",
-  measurementId: "G-X7N3QV3F76"
-};
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { environment } from "src/environments/environment";
+import { NavbarComponent } from "./components/navbar/navbar.component";
 
 @NgModule({
   declarations: [
@@ -30,17 +25,20 @@ var firebaseConfig = {
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    CalendarComponent
+    CalendarComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
-    }),
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

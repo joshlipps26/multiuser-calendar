@@ -14,20 +14,36 @@
         </div>
 
         <!-- Login Form -->
-        <form>
-            <input type="text" id="email" class="fadeIn second" name="login" placeholder="email">
-            <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-            <input type="text" id="password" class="fadeIn third" name="login" placeholder="confirm password">
-            <input type="text" id="password" class="fadeIn third" name="login" placeholder="first name">
-            <input type="text" id="password" class="fadeIn third" name="login" placeholder="last name">
+        <div class="row" *ngIf="authError">
+            <div class="col-12 alert alert-danger">
+                {{ authError?.message }}
+            </div>
+        </div>
+        <form #userRegForm="ngForm" (ngSubmit)="createUser(userRegForm)">
+            <!-- show error -->
+            <div class="row" *ngIf="authError">
+                <div class="col-12 alert alert-danger">
+                    {{ authError?.message }}
+                </div>
+            </div>
+            <input ngModel #email="ngModel" type="text" id="email" class="fadeIn second" name="email"
+                placeholder="email">
+            <input ngModel #password="ngModel" type="text" id="password" class="fadeIn second" name="password"
+                placeholder="password">
+            <input ngModel type="text" id="confirm" class="fadeIn second" name="confirm" placeholder="confirm password">
+            <input ngModel #firstName="ngModel" type="text" id="firstName" class="fadeIn second" name="firstName"
+                placeholder="first name">
+            <input ngModel #lastName="ngModel" type="text" id="lastName" class="fadeIn second" name="lastName"
+                placeholder="last name">
             <a class="underlineHover" href="#">Upload Avatar</a>
             <br>
             <input type="submit" class="fadeIn fourth" value="Log In">
         </form>
-
         <!-- Remind Passowrd -->
         <div id="formFooter">
-            <a class="underlineHover" href="#">Already a user? Login!</a>
+            <div class="returnToLogin">
+                <a class="underlineHover" routerLink="/login">Already a user? Login!</a>
+            </div>
         </div>
 
     </div>
