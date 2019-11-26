@@ -3,6 +3,13 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
+<!-- show error
+<div class="row" *ngIf="authError">
+    <div class="col-12 alert alert-danger">
+        {{ authError?.message }}
+    </div>
+</div> -->
+
 <div class="wrapper fadeInDown">
     <div id="formContent">
         <!-- Tabs Titles -->
@@ -15,16 +22,22 @@
         </div>
 
         <!-- Login Form -->
-        <form>
-            <input type="text" id="email" class="fadeIn second" name="login" placeholder="email">
-            <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+        <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+            <!-- username-->
+            <input ngModel #email="ngModel" type="text" id="email" class="fadeIn second form-control" name="email"
+                placeholder="email">
+            <!-- passwrod -->
+            <input ngModel #password="ngModel" type="text" id="password" class="fadeIn third form-control"
+                name="password" placeholder="password">
+            <!-- login click -->
             <input type="submit" class="fadeIn fourth" value="Log In">
         </form>
 
         <!-- Remind Passowrd -->
         <div id="formFooter">
-            <a class="underlineHover" href="#">Not registered? Click here!</a>
-        </div>
+            <div class="redirectToLogin">
+                <a class="underlineHover" routerLink="/register">Not registered? Click here!</a>
+            </div>
 
+        </div>
     </div>
-</div>

@@ -1,0 +1,5 @@
+<p>navbar works</p>
+<p *ngIf="user">Logged in as: {{ user?.email }} - {{ user?.displayName}}</p>
+<button type="button" class="btn btn-primary" *ngIf="user" (click)="logout()">Logout</button>
+
+<!-- buttons here for logout / profile / etc -->
