@@ -19,6 +19,7 @@ import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { environment } from "src/environments/environment";
 import { NavbarComponent } from "./components/navbar/navbar.component";
 import { Calendar2Component } from "./components/calendar2/calendar2.component";
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { Calendar2Component } from "./components/calendar2/calendar2.component";
     ProfileComponent,
     CalendarComponent,
     NavbarComponent,
-    Calendar2Component
+    Calendar2Component,
+    PasswordResetComponent
   ],
   imports: [
     BrowserModule,
