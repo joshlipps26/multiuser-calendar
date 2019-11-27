@@ -18,6 +18,8 @@ import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { environment } from "src/environments/environment";
 import { NavbarComponent } from "./components/navbar/navbar.component";
+import { Calendar2Component } from "./components/calendar2/calendar2.component";
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { NavbarComponent } from "./components/navbar/navbar.component";
     RegisterComponent,
     ProfileComponent,
     CalendarComponent,
-    NavbarComponent
+    NavbarComponent,
+    Calendar2Component,
+    PasswordResetComponent
   ],
   imports: [
     BrowserModule,

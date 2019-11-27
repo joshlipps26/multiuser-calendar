@@ -1,5 +1,10 @@
-<p>navbar works</p>
-<p *ngIf="user">Logged in as: {{ user?.email }} - {{ user?.displayName}}</p>
-<button type="button" class="btn btn-primary" *ngIf="user" (click)="logout()">Logout</button>
-
-<!-- buttons here for logout / profile / etc -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8" id="current-user">
+            <p *ngIf="user">Current User: {{ user?.email }} : {{ user?.displayName}}</p>
+        </div>
+        <div class="col-lg-4" id="button-col">
+            <button type="button" class="btn btn-primary" *ngIf="user" (click)="logout()">Logout</button>
+        </div>
+    </div>
+</div>
