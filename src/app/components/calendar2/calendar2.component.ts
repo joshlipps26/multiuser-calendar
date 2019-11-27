@@ -134,6 +134,7 @@ export class Calendar2Component {
         this.activeDayIsOpen = true;
       }
       this.viewDate = date;
+      console.log("test");
     }
   }
 
