@@ -44,9 +44,6 @@ export class AuthService {
       .then(userCredential => {
         this.newUser = user;
 
-        //test
-        console.log(userCredential);
-
         userCredential.user.updateProfile({
           displayName: user.firstName + " " + user.lastName
         });
@@ -57,6 +54,9 @@ export class AuthService {
       })
       .catch(error => {
         this.eventAuthError.next(error);
+      })
+      .then(userCredential => {
+        this.router.navigate(["/calendar"]);
       });
   }
 
