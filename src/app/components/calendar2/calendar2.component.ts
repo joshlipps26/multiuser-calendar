@@ -28,6 +28,9 @@ import {
 import { EventService } from "../../services/event.service";
 import { Event } from "../../models/event.model";
 
+//current user
+import { AuthService } from "../auth.service";
+
 const colors: any = {
   red: {
     primary: "#ad2121",
@@ -50,10 +53,21 @@ const colors: any = {
   templateUrl: "calendar2.component.html"
 })
 export class Calendar2Component implements OnInit {
+  //get current user
+  user: firebase.User;
   @ViewChild("modalContent", { static: true }) modalContent: TemplateRef<any>;
+
+  constructor(
+    private modal: NgbModal,
+    private eventService: EventService,
+    private auth: AuthService
+  ) {}
 
   ngOnInit() {
     console.log("Calendar 2 initiliazed");
+    this.auth.getUserState().subscribe(user => {
+      this.user = user;
+    });
   }
 
   view: CalendarView = CalendarView.Month;
@@ -88,49 +102,47 @@ export class Calendar2Component implements OnInit {
   refresh: Subject<any> = new Subject();
 
   events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: "A 3 day event",
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    },
-    {
-      start: startOfDay(new Date()),
-      title: "An event with no end date",
-      color: colors.yellow,
-      actions: this.actions
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: "A long event that spans 2 months",
-      color: colors.blue,
-      allDay: true
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: "A draggable and resizable event",
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    }
+    // {
+    //   start: subDays(startOfDay(new Date()), 1),
+    //   end: addDays(new Date(), 1),
+    //   title: "A 3 day event",
+    //   color: colors.red,
+    //   actions: this.actions,
+    //   allDay: true,
+    //   resizable: {
+    //     beforeStart: true,
+    //     afterEnd: true
+    //   },
+    //   draggable: true
+    // },
+    // {
+    //   start: startOfDay(new Date()),
+    //   title: "An event with no end date",
+    //   color: colors.yellow,
+    //   actions: this.actions
+    // },
+    // {
+    //   start: subDays(endOfMonth(new Date()), 3),
+    //   end: addDays(endOfMonth(new Date()), 3),
+    //   title: "A long event that spans 2 months",
+    //   color: colors.blue,
+    //   allDay: true
+    // },
+    // {
+    //   start: addHours(startOfDay(new Date()), 2),
+    //   end: addHours(new Date(), 2),
+    //   title: "A draggable and resizable event",
+    //   color: colors.yellow,
+    //   actions: this.actions,
+    //   resizable: {
+    //     beforeStart: true,
+    //     afterEnd: true
+    //   },
+    //   draggable: true
+    // }
   ];
 
   activeDayIsOpen: boolean = true;
-
-  constructor(private modal: NgbModal, private eventService: EventService) {}
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -144,10 +156,37 @@ export class Calendar2Component implements OnInit {
       }
       this.viewDate = date;
       this.addEvent(date);
-      console.log("Date: + " + date);
     }
   }
 
+  // ADD EVENT TO DB
+  addEvent(date): void {
+    this.events = [
+      ...this.events,
+      {
+        title: "New event",
+        start: startOfDay(date),
+        end: endOfDay(date),
+        color: colors.red,
+        draggable: true,
+        resizable: {
+          beforeStart: true,
+          afterEnd: true
+        },
+        actions: this.actions
+      }
+    ];
+    // get current time and add to db
+    console.log("event added");
+    let DateTime = new Date();
+    console.log(DateTime);
+    this.eventService.createEvent({
+      creationDate: DateTime.toDateString(),
+      startDate: date,
+      endDate: date,
+      user: this.user.displayName
+    });
+  }
   eventTimesChanged({
     event,
     newStart,
@@ -169,27 +208,6 @@ export class Calendar2Component implements OnInit {
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: "lg" });
-  }
-
-  addEvent(date): void {
-    this.events = [
-      ...this.events,
-      {
-        title: "New event",
-        start: startOfDay(date),
-        end: endOfDay(date),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true
-        }
-      }
-    ];
-    console.log("event added");
-    this.eventService.createEvent({
-      creationDate: date
-    });
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {

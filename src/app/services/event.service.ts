@@ -18,7 +18,10 @@ export class EventService {
     return this.firestore.collection("events").add(event);
   }
 
-  // delete an event
+  // // delete an event
+  // deleteEvent(event: Event) {
+  //   delete Event.date;
+  // }
 
   // update an event
 }

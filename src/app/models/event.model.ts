@@ -1,3 +1,6 @@
 export class Event {
-  creationDate: Date;
+  creationDate: string;
+  startDate: Date;
+  endDate: Date;
+  user: string;
 }
