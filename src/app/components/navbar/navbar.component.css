@@ -1,0 +1,9 @@
+#button-col {
+  text-align: right;
+  width: 100%;
+  padding: 0;
+}
+
+#current-user {
+  font-family: "Courier New", Courier, monospace;
+}

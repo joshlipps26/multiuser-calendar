@@ -1,0 +1,50 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+
+        <!-- Icon -->
+        <div class="fadeIn first">
+            <!-- <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" /> -->
+            <h1><span class="label label-default">Logo Here</span></h1>
+        </div>
+
+        <!-- Login Form -->
+        <div class="row" *ngIf="authError">
+            <div class="col-12 alert alert-danger">
+                {{ authError?.message }}
+            </div>
+        </div>
+        <form #userRegForm="ngForm" (ngSubmit)="createUser(userRegForm)">
+            <!-- show error -->
+            <div class="row" *ngIf="authError">
+                <div class="col-12 alert alert-danger">
+                    {{ authError?.message }}
+                </div>
+            </div>
+            <input ngModel #email="ngModel" type="text" id="email" class="fadeIn second" name="email"
+                placeholder="email">
+            <input ngModel #password="ngModel" type="text" id="password" class="fadeIn second" name="password"
+                placeholder="password">
+            <input ngModel type="text" id="confirm" class="fadeIn second" name="confirm" placeholder="confirm password">
+            <input ngModel #firstName="ngModel" type="text" id="firstName" class="fadeIn second" name="firstName"
+                placeholder="first name">
+            <input ngModel #lastName="ngModel" type="text" id="lastName" class="fadeIn second" name="lastName"
+                placeholder="last name">
+            <a class="underlineHover" href="#">Upload Avatar</a>
+            <br>
+            <input type="submit" class="fadeIn fourth" value="Register">
+        </form>
+        <!-- Remind Passowrd -->
+        <div id="formFooter">
+            <div class="returnToLogin">
+                <a class="underlineHover" routerLink="/login">Already a user? Login!</a>
+            </div>
+        </div>
+
+    </div>
+</div>
