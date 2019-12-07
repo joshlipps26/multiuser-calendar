@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Add Event for {{description}}</h2>
+<div id="formContent">
+
+    <!-- Login Form -->
+    <form #eventForm="ngForm" (ngSubmit)="addEvent(eventForm)">
+        <!-- event message -->
+        <input ngModel #message="ngModel" type="text" id="message" class="fadeIn second form-control" name="message"
+            placeholder="message">
+        <!-- submit -->
+        <input type="submit" class="fadeIn fourth" value="Submit Event">
+    </form>
+
+</div>

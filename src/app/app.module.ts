@@ -22,6 +22,11 @@ import { NavbarComponent } from "./components/navbar/navbar.component";
 import { Calendar2Component } from "./components/calendar2/calendar2.component";
 import { PasswordResetComponent } from "./components/password-reset/password-reset.component";
 
+// dialog box
+import { MatDialogModule } from "@angular/material";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { AddEventComponent } from "./components/calendar2/add-event/add-event.component";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,22 +36,26 @@ import { PasswordResetComponent } from "./components/password-reset/password-res
     CalendarComponent,
     NavbarComponent,
     Calendar2Component,
-    PasswordResetComponent
+    PasswordResetComponent,
+    AddEventComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireDatabaseModule,
+    MatDialogModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
     })
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AddEventComponent]
 })
 export class AppModule {}

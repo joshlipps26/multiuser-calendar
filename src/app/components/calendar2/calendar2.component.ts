@@ -31,6 +31,11 @@ import { Event } from "../../models/event.model";
 //current user
 import { AuthService } from "../auth.service";
 
+// pop up
+import { MatDialog, MatDialogConfig } from "@angular/material";
+import { AddEventComponent } from "./add-event/add-event.component";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
 const colors: any = {
   red: {
     primary: "#ad2121",
@@ -60,7 +65,8 @@ export class Calendar2Component implements OnInit {
   constructor(
     private modal: NgbModal,
     private eventService: EventService,
-    private auth: AuthService
+    private auth: AuthService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -71,6 +77,8 @@ export class Calendar2Component implements OnInit {
   }
 
   view: CalendarView = CalendarView.Month;
+
+  currentlyClickedDate: Date;
 
   CalendarView = CalendarView;
 
@@ -152,21 +160,23 @@ export class Calendar2Component implements OnInit {
         events.length === 0
       ) {
         this.activeDayIsOpen = false;
+        console.log(`day clicked - ${date}`);
+        this.currentlyClickedDate = date;
+        this.openDialog(date.toDateString(), events);
       } else {
         this.activeDayIsOpen = true;
       }
       this.viewDate = date;
-      this.addEvent(date);
     }
   }
 
   // ADD EVENT TO DB
-  addEvent(date): void {
+  addEvent(date, message): void {
     let DateTime = new Date();
     this.events = [
       ...this.events,
       {
-        title: "New event",
+        title: message,
         start: startOfDay(date),
         end: endOfDay(date),
         color: colors.red,
@@ -224,5 +234,23 @@ export class Calendar2Component implements OnInit {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+  }
+
+  openDialog(date: string, events: CalendarEvent[]) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      description: date,
+      date: date
+    };
+
+    const dialogRef = this.dialog.open(AddEventComponent, dialogConfig);
+
+    dialogRef
+      .afterClosed()
+      .subscribe(data => this.addEvent(this.currentlyClickedDate, data));
   }
 }
