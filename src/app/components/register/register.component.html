@@ -9,8 +9,7 @@
 
         <!-- Icon -->
         <div class="fadeIn first">
-            <!-- <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" /> -->
-            <h1><span class="label label-default">Logo Here</span></h1>
+            <img src="../../assets/logo.png" id="icon" alt="User Icon" />
         </div>
 
         <!-- Login Form -->
@@ -20,12 +19,6 @@
             </div>
         </div>
         <form #userRegForm="ngForm" (ngSubmit)="createUser(userRegForm)">
-            <!-- show error -->
-            <div class="row" *ngIf="authError">
-                <div class="col-12 alert alert-danger">
-                    {{ authError?.message }}
-                </div>
-            </div>
             <input ngModel #email="ngModel" type="text" id="email" class="fadeIn second" name="email"
                 placeholder="email">
             <input ngModel #password="ngModel" type="text" id="password" class="fadeIn second" name="password"

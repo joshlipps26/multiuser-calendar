@@ -95,6 +95,7 @@ export class Calendar2Component implements OnInit {
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.events = this.events.filter(iEvent => iEvent !== event);
         this.handleEvent("Deleted", event);
+        this.deleteEvent(event);
       }
     }
   ];
@@ -161,6 +162,7 @@ export class Calendar2Component implements OnInit {
 
   // ADD EVENT TO DB
   addEvent(date): void {
+    let DateTime = new Date();
     this.events = [
       ...this.events,
       {
@@ -178,7 +180,6 @@ export class Calendar2Component implements OnInit {
     ];
     // get current time and add to db
     console.log("event added");
-    let DateTime = new Date();
     console.log(DateTime);
     this.eventService.createEvent({
       creationDate: DateTime.toDateString(),
@@ -205,13 +206,16 @@ export class Calendar2Component implements OnInit {
     this.handleEvent("Dropped or resized", event);
   }
 
+  // removing functionality from this fixes shifting error
   handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: "lg" });
+    // this.modalData = { event, action };
+    // this.modal.open(this.modalContent, { size: "lg" });
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
     this.events = this.events.filter(event => event !== eventToDelete);
+    this.eventService.deleteEvent(eventToDelete.start);
+    console.log("deleted event" + eventToDelete.start.toString);
   }
 
   setView(view: CalendarView) {

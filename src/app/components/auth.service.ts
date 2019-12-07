@@ -43,22 +43,18 @@ export class AuthService {
       .createUserWithEmailAndPassword(user.email, user.password)
       .then(userCredential => {
         this.newUser = user;
-
-        userCredential.user.updateProfile({
-          displayName: user.firstName + " " + user.lastName
-        });
-
-        this.insertUserData(userCredential).then(() => {
-          this.router.navigate(["/calendar"]);
-        });
+        this.router.navigate(["/calendar"]);
       })
       .catch(error => {
         this.eventAuthError.next(error);
-      })
-      .then(userCredential => {
-        this.router.navigate(["/calendar"]);
       });
+    // .then(userCredential => {
+    //   this.insertUserData(this.newUser).then(() => {
+    //     console.log("user added");
   }
+  //);
+  //});
+  // }
 
   insertUserData(userCredential: firebase.auth.UserCredential) {
     return this.db.doc(`Users/${userCredential.user.uid}`).set({

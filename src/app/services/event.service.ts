@@ -19,9 +19,9 @@ export class EventService {
   }
 
   // // delete an event
-  // deleteEvent(event: Event) {
-  //   delete Event.date;
-  // }
+  deleteEvent(start: Date) {
+    this.firestore.doc("events/" + start).delete();
+  }
 
   // update an event
 }
